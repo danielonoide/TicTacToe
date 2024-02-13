@@ -1,0 +1,147 @@
+[gd_scene load_steps=10 format=3 uid="uid://bqd7wiyv027um"]
+
+[ext_resource type="FontFile" uid="uid://dkw747yti7iog" path="res://assets/fonts/impact.ttf" id="1_8bgw0"]
+[ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_gvjuh"]
+[ext_resource type="Texture2D" uid="uid://25ax34bedci6" path="res://assets/images/tic-tac-toe-150614_640.png" id="2_od6hr"]
+[ext_resource type="AudioStream" uid="uid://qdnnw15273ft" path="res://assets/music/main_menu.mp3" id="4_j7opw"]
+[ext_resource type="Theme" uid="uid://depmee7lfdl4t" path="res://assets/themes/button_theme.tres" id="4_v6nle"]
+[ext_resource type="Texture2D" uid="uid://bqoh634q4r7me" path="res://assets/images/white_back_button.png" id="6_csl4n"]
+[ext_resource type="Texture2D" uid="uid://ck28a65hv34ng" path="res://assets/images/white_back_button_pressed.png" id="7_631ad"]
+
+[sub_resource type="Gradient" id="Gradient_akufl"]
+offsets = PackedFloat32Array(0, 0.00869565, 0.0173913, 0.93913)
+colors = PackedColorArray(0.920354, 0.920354, 0.920354, 1, 1, 1, 1, 1, 0.920354, 0.920354, 0.920354, 1, 0, 0, 0.952941, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_4pbi4"]
+gradient = SubResource("Gradient_akufl")
+fill_to = Vector2(0, 1)
+
+[node name="Main Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_gvjuh")
+
+[node name="MenuMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_j7opw")
+autoplay = true
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_4pbi4")
+
+[node name="LabelContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -209.5
+offset_top = 100.0
+offset_right = 209.5
+offset_bottom = 223.0
+grow_horizontal = 2
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="LabelContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.0901961, 0.388235, 0.345098, 1)
+theme_override_fonts/font = ExtResource("1_8bgw0")
+theme_override_font_sizes/font_size = 100
+text = "Tic tac toe"
+
+[node name="IconContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -358.0
+offset_top = -339.0
+offset_right = 690.0
+offset_bottom = 299.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.685, 0.685)
+
+[node name="TextureRect" type="TextureRect" parent="IconContainer"]
+layout_mode = 2
+texture = ExtResource("2_od6hr")
+
+[node name="ButtonsContainer" type="Control" parent="."]
+layout_mode = 1
+anchor_left = 0.5
+anchor_top = 0.834
+anchor_right = 0.5
+anchor_bottom = 0.834
+offset_left = -288.0
+offset_top = -90.52
+offset_right = 1368.0
+offset_bottom = 125.48
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="GameModeBTNs" type="VBoxContainer" parent="ButtonsContainer"]
+layout_mode = 0
+offset_right = 578.0
+offset_bottom = 284.005
+theme_override_constants/separation = 40
+
+[node name="OnePlayerBTN" type="Button" parent="ButtonsContainer/GameModeBTNs"]
+layout_mode = 2
+theme = ExtResource("4_v6nle")
+theme_override_font_sizes/font_size = 51
+text = "Un Jugador"
+
+[node name="TwoPlayersBTN" type="Button" parent="ButtonsContainer/GameModeBTNs"]
+layout_mode = 2
+theme = ExtResource("4_v6nle")
+theme_override_font_sizes/font_size = 51
+text = "Dos Jugadores"
+
+[node name="DifficultyBTNs" type="VBoxContainer" parent="ButtonsContainer"]
+visible = false
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -656.0
+offset_top = -215.885
+offset_right = -78.0
+offset_bottom = 67.116
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_constants/separation = 40
+
+[node name="CancelBTN" type="TextureButton" parent="ButtonsContainer/DifficultyBTNs"]
+layout_mode = 2
+texture_normal = ExtResource("6_csl4n")
+texture_pressed = ExtResource("7_631ad")
+
+[node name="EasyDiffBTN" type="Button" parent="ButtonsContainer/DifficultyBTNs"]
+layout_mode = 2
+theme = ExtResource("4_v6nle")
+theme_override_font_sizes/font_size = 51
+text = "Easy"
+
+[node name="HardDiffBTN" type="Button" parent="ButtonsContainer/DifficultyBTNs"]
+layout_mode = 2
+theme = ExtResource("4_v6nle")
+theme_override_font_sizes/font_size = 51
+text = "Normal"
+
+[connection signal="pressed" from="ButtonsContainer/GameModeBTNs/OnePlayerBTN" to="." method="_on_one_player_btn_pressed"]
+[connection signal="pressed" from="ButtonsContainer/GameModeBTNs/TwoPlayersBTN" to="." method="_on_two_players_btn_pressed"]
+[connection signal="pressed" from="ButtonsContainer/DifficultyBTNs/CancelBTN" to="." method="_on_cancel_btn_pressed"]
+[connection signal="pressed" from="ButtonsContainer/DifficultyBTNs/EasyDiffBTN" to="." method="_on_easy_diff_btn_pressed"]
+[connection signal="pressed" from="ButtonsContainer/DifficultyBTNs/HardDiffBTN" to="." method="_on_hard_diff_btn_pressed"]

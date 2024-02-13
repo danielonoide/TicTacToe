@@ -1,0 +1,204 @@
+[gd_scene load_steps=17 format=3 uid="uid://btjd6f250bs5d"]
+
+[ext_resource type="Script" path="res://scripts/game.gd" id="1_xnua0"]
+[ext_resource type="FontFile" uid="uid://dkw747yti7iog" path="res://assets/fonts/impact.ttf" id="3_6mee1"]
+[ext_resource type="AudioStream" uid="uid://ca0cntfysyj4n" path="res://assets/SFX/pressing_sound.mp3" id="4_qeve8"]
+[ext_resource type="AudioStream" uid="uid://jclk706hvu4x" path="res://assets/SFX/winning_sound.mp3" id="5_4r2o5"]
+[ext_resource type="Texture2D" uid="uid://cdrjk5koxaxyj" path="res://assets/images/back_button.png" id="5_lkyu7"]
+[ext_resource type="Texture2D" uid="uid://dcu0dvmr5ps8d" path="res://assets/images/back_button_pressed.png" id="6_4a5aa"]
+
+[sub_resource type="Gradient" id="Gradient_h06rv"]
+offsets = PackedFloat32Array(0, 0.00869565, 0.0173913, 0.93913)
+colors = PackedColorArray(0.920354, 0.920354, 0.920354, 1, 1, 1, 1, 1, 0.920354, 0.920354, 0.920354, 1, 0, 0, 0.952941, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_gyq0x"]
+gradient = SubResource("Gradient_h06rv")
+fill_to = Vector2(0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ldhns"]
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="Theme" id="Theme_giv8s"]
+Button/colors/font_color = Color(0, 0, 0, 1)
+Button/colors/font_focus_color = Color(0, 0, 0, 1)
+Button/colors/font_hover_color = Color(0, 0, 0, 1)
+Button/colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+Button/colors/font_pressed_color = Color(0, 0, 0, 1)
+Button/styles/normal = SubResource("StyleBoxFlat_ldhns")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a3b2q"]
+bg_color = Color(0, 0.682353, 0.905882, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3xp0j"]
+bg_color = Color(0.356863, 0.321569, 0.513726, 1)
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oxv42"]
+bg_color = Color(0.619608, 0.596078, 0.580392, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tjtrr"]
+bg_color = Color(0.686275, 0.466667, 0.980392, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lnp7s"]
+bg_color = Color(0.482353, 0.560784, 0.976471, 1)
+
+[sub_resource type="Theme" id="Theme_i0kxr"]
+AcceptDialog/constants/buttons_separation = 0
+AcceptDialog/styles/panel = SubResource("StyleBoxFlat_a3b2q")
+Button/font_sizes/font_size = 50
+Button/fonts/font = ExtResource("3_6mee1")
+Button/styles/normal = SubResource("StyleBoxFlat_3xp0j")
+PopupDialog/styles/panel = SubResource("StyleBoxFlat_oxv42")
+PopupMenu/styles/panel = SubResource("StyleBoxFlat_tjtrr")
+PopupPanel/styles/panel = SubResource("StyleBoxFlat_lnp7s")
+
+[node name="game" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_xnua0")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_gyq0x")
+
+[node name="GridRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -313.0
+offset_top = -314.0
+offset_right = 313.0
+offset_bottom = 314.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Centercontainer" type="CenterContainer" parent="GridRect"]
+layout_mode = 0
+offset_left = -48.0
+offset_top = 9.955
+offset_right = 672.0
+offset_bottom = 617.955
+
+[node name="GridContainer" type="GridContainer" parent="GridRect/Centercontainer"]
+layout_mode = 2
+columns = 3
+
+[node name="Button" type="Button" parent="GridRect/Centercontainer/GridContainer"]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+theme = SubResource("Theme_giv8s")
+theme_override_font_sizes/font_size = 100
+
+[node name="Button2" type="Button" parent="GridRect/Centercontainer/GridContainer"]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+theme = SubResource("Theme_giv8s")
+theme_override_font_sizes/font_size = 100
+
+[node name="Button3" type="Button" parent="GridRect/Centercontainer/GridContainer"]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+theme = SubResource("Theme_giv8s")
+theme_override_font_sizes/font_size = 100
+
+[node name="Button4" type="Button" parent="GridRect/Centercontainer/GridContainer"]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+theme = SubResource("Theme_giv8s")
+theme_override_font_sizes/font_size = 100
+
+[node name="Button5" type="Button" parent="GridRect/Centercontainer/GridContainer"]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+theme = SubResource("Theme_giv8s")
+theme_override_font_sizes/font_size = 100
+
+[node name="Button6" type="Button" parent="GridRect/Centercontainer/GridContainer"]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+theme = SubResource("Theme_giv8s")
+theme_override_font_sizes/font_size = 100
+
+[node name="Button7" type="Button" parent="GridRect/Centercontainer/GridContainer"]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+theme = SubResource("Theme_giv8s")
+theme_override_font_sizes/font_size = 100
+
+[node name="Button8" type="Button" parent="GridRect/Centercontainer/GridContainer"]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+theme = SubResource("Theme_giv8s")
+theme_override_font_sizes/font_size = 100
+
+[node name="Button9" type="Button" parent="GridRect/Centercontainer/GridContainer"]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+theme = SubResource("Theme_giv8s")
+theme_override_font_sizes/font_size = 100
+
+[node name="LabelContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -358.0
+offset_top = -235.0
+offset_right = 358.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="TurnLabel" type="Label" parent="LabelContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 50
+text = "Turn"
+
+[node name="GameOverDialog" type="ConfirmationDialog" parent="."]
+title = "¡Ha ganado!"
+initial_position = 1
+size = Vector2i(598, 95)
+theme = SubResource("Theme_i0kxr")
+ok_button_text = "Salir"
+cancel_button_text = "Reiniciar"
+
+[node name="PressingSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_qeve8")
+
+[node name="WinningSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_4r2o5")
+
+[node name="BackBTN" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 19.0
+offset_top = -10.0001
+offset_right = 241.0
+offset_bottom = 301.0
+scale = Vector2(0.43, 0.43)
+texture_normal = ExtResource("5_lkyu7")
+texture_pressed = ExtResource("6_4a5aa")
+
+[connection signal="canceled" from="GameOverDialog" to="." method="_on_game_over_dialog_canceled"]
+[connection signal="confirmed" from="GameOverDialog" to="." method="_on_game_over_dialog_confirmed"]
+[connection signal="pressed" from="BackBTN" to="." method="_on_back_btn_pressed"]

@@ -1,0 +1,41 @@
+[gd_scene load_steps=6 format=3 uid="uid://crqey4dt4oyno"]
+
+[ext_resource type="Texture2D" uid="uid://b6431huy170j1" path="res://assets/images/SoundIcon.png" id="1_x74cc"]
+[ext_resource type="Script" path="res://scripts/global.gd" id="1_xp51v"]
+[ext_resource type="Texture2D" uid="uid://s51d5cpmegjo" path="res://assets/images/MuteIcon.png" id="2_lpcwa"]
+[ext_resource type="Script" path="res://scripts/Mute_BTN.gd" id="3_6oykp"]
+[ext_resource type="AudioStream" uid="uid://622kb3mw2nmc" path="res://assets/music/bg_music.mp3" id="5_2x6c1"]
+
+[node name="Global" type="CanvasLayer"]
+layer = 100
+script = ExtResource("1_xp51v")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="MuteBTN" type="TextureButton" parent="Control"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -115.0
+offset_top = 34.0
+offset_right = 525.0
+offset_bottom = 669.0
+grow_horizontal = 0
+scale = Vector2(0.1, 0.1)
+toggle_mode = true
+texture_normal = ExtResource("1_x74cc")
+texture_pressed = ExtResource("2_lpcwa")
+script = ExtResource("3_6oykp")
+
+[node name="GameMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_2x6c1")
+
+[connection signal="pressed" from="Control/MuteBTN" to="Control/MuteBTN" method="_on_pressed"]
