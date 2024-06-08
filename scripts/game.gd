@@ -1,5 +1,7 @@
 extends Control
 
+class_name Game
+
 @onready var grid : GridContainer = $GridRect/Centercontainer/GridContainer
 @onready var turn_label : Label = $LabelContainer/TurnLabel
 @onready var game_over_dialog : ConfirmationDialog = $GameOverDialog
@@ -7,12 +9,12 @@ extends Control
 @onready var winning_sound : AudioStreamPlayer = $WinningSound
 @onready var buttons = grid.get_children()
 
-enum State {EMPTY, CIRCLE, CROSS}
+enum State {NONE = 0, CIRCLE = 1, CROSS = -1}
 
 var matrix = [
-	[State.EMPTY, State.EMPTY, State.EMPTY],
-	[State.EMPTY, State.EMPTY, State.EMPTY],
-	[State.EMPTY, State.EMPTY, State.EMPTY],
+	[State.NONE, State.NONE, State.NONE],
+	[State.NONE, State.NONE, State.NONE],
+	[State.NONE, State.NONE, State.NONE],
 ]
 
 var cross_turn : bool = true
@@ -57,71 +59,36 @@ func change_turn_label():
 	else:
 		turn_label.text = "O turn"
 
+func disable_buttons(disable: bool):
+	for button in buttons:
+		button.disabled = disable
+
+
 func _button_pressed(button: Button, column: int, row: int):
-	if matrix[row][column]!=State.EMPTY:
+	
+	if matrix[row][column]!=State.NONE:
 		return
+	
 	
 	button.text = "X" if cross_turn else "O"
 	matrix[row][column] = State.CROSS if cross_turn else State.CIRCLE
 	pressing_sound.play()
 	
-	if check_winner(column, row):
+	if Grid.evaluate(matrix, column, row) != State.NONE:
 		game_over(false)
 		return
-	#elif State.EMPTY not in matrix:	
-	elif !matrix.any(func(arr): return State.EMPTY in arr):
+	#elif State.NONE not in matrix:	
+	elif Grid.is_full(matrix):
 		game_over(true)
 		return
 	
 	change_turn()
 	
-	if GlobalScript.one_player_mode && !cross_turn:
-		bot_move()
+	if GlobalScript.one_player_mode:
+		disable_buttons(!cross_turn)
+		if !cross_turn:
+			bot_move()
 	
-	
-func check_winner(column: int, row: int) -> bool:
-	var state_to_look_for = matrix[row][column]
-	return winner_in_row_or_column(state_to_look_for, column, row) || winner_in_diagonals(state_to_look_for)
-	
-
-func winner_in_row_or_column(state_to_look_for: State, column: int, row: int) -> bool:
-	var currIndex = 0
-	var three_in_col : bool = true
-	var three_in_row : bool = true
-	
-	while currIndex<matrix[0].size():
-		if matrix[row][currIndex] != state_to_look_for:
-			three_in_col = false
-			
-		if matrix[currIndex][column] != state_to_look_for:
-			three_in_row = false
-		
-		currIndex+=1
-		
-	return three_in_col || three_in_row
-		
-		
-func winner_in_diagonals(state_to_look_for: State) -> bool:
-	var currCol = 0
-	var currRow = 0
-	var currRow2 = matrix.size() -1
-	
-	var made_first_diag = true
-	var made_second_diag = true
-	
-	while currCol<matrix.size() && currRow<matrix.size():
-		if matrix[currRow][currCol] != state_to_look_for:
-			made_first_diag = false
-		
-		if matrix[currRow2][currCol] != state_to_look_for:
-			made_second_diag = false
-			
-		currCol+=1
-		currRow+=1
-		currRow2-=1
-
-	return made_first_diag || made_second_diag
-		
 func game_over(tie: bool):
 	game_over_dialog.show()
 	
@@ -142,22 +109,30 @@ func bot_move():
 	if GlobalScript.easy_diff:
 		bot_easy_move()
 		return
-	bot_normal_move()
+	bot_hard_move()
 	
 func bot_easy_move():
 	var valid_move = false
 	while not valid_move:
 		var row = randi_range(0, 2)
 		var col = randi_range(0, 2)
-		if matrix[row][col] == State.EMPTY:
+		if matrix[row][col] == State.NONE:
 			#matrix[row][col] = State.CIRCLE
 			valid_move = true
 			var buttons_index = (row * 3) + col
 			var chosen_button = buttons[buttons_index]
 			_button_pressed(chosen_button, col, row)
 
-func bot_normal_move():
-	pass
+func bot_hard_move():
+	#var best_move = Grid.minimax(matrix.duplicate(true), false)
+	var best_move = [0]
+	Grid.minimax(matrix.duplicate(true), false, best_move)
+	var row = best_move[0]/3
+	var col = best_move[0]-row*3
+	print("BEst MOVE: ", best_move[0], " row: ", row, " col: ", col)
+	
+	_button_pressed(buttons[best_move[0]], col, row)
+
 
 #back button event
 func _notification(what: int) -> void:

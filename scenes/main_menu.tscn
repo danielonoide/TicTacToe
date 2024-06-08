@@ -132,13 +132,13 @@ texture_pressed = ExtResource("7_631ad")
 layout_mode = 2
 theme = ExtResource("4_v6nle")
 theme_override_font_sizes/font_size = 51
-text = "Easy"
+text = "Fácil"
 
 [node name="HardDiffBTN" type="Button" parent="ButtonsContainer/DifficultyBTNs"]
 layout_mode = 2
 theme = ExtResource("4_v6nle")
 theme_override_font_sizes/font_size = 51
-text = "Normal"
+text = "Díficil"
 
 [connection signal="pressed" from="ButtonsContainer/GameModeBTNs/OnePlayerBTN" to="." method="_on_one_player_btn_pressed"]
 [connection signal="pressed" from="ButtonsContainer/GameModeBTNs/TwoPlayersBTN" to="." method="_on_two_players_btn_pressed"]
